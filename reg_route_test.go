@@ -14,19 +14,19 @@ import (
 
 type A struct{}
 
-func (a *A) GetRoutes() Routes {
-	return Routes{
+func (a *A) GetRoutes() Routes[map[string]any] {
+	return Routes[map[string]any]{
 		{
 			Method: GET,
 			Path:   "demo",
-			Handle: func(c *gin.Context) any {
+			Handle: func(c *gin.Context) map[string]any {
 				return map[string]any{"a": 1}
 			},
 		},
 		{
 			Method: POST,
 			Path:   "demo",
-			Handle: func(c *gin.Context) any {
+			Handle: func(c *gin.Context) map[string]any {
 				return map[string]any{"b": 2}
 			},
 		},
@@ -36,7 +36,7 @@ func (a *A) GetRoutes() Routes {
 func TestMain(m *testing.M) {
 	g := gin.New()
 	group := g.Group("v1")
-	PackageRoutes(group, &A{})
+	PackageRoutes[map[string]any](group, &A{})
 	go func() {
 		err := g.Run(fmt.Sprintf(":%d", 8080))
 		if err != nil {
