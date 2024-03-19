@@ -14,14 +14,14 @@ import (
 
 func TestMain(m *testing.M) {
 	g := gin.New()
-	g.Use(gin.Recovery())
+	g.Use(gin.Recovery()) // set a global middleware
 	//g.Use(middleware) // set a global middleware
 
 	PackageRoutes[Response](g.Group("v1"), &A{})  //register the first service
 	PackageRoutes[Response](g.Group("v2"), &A2{}) //register the second service
 
 	group3 := g.Group("v3")
-	//group3.Use(middleware) // set a middleware to this service
+	//group3.Use(middleware) // set a middleware only to this service
 	PackageRoutes[Response](group3, &A3{}) //register the third service
 
 	go func() {
