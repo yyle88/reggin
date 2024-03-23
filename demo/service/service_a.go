@@ -16,6 +16,7 @@ func (a *A) GetRoutes() regginroute.Routes[message.Response] {
 	return regginroute.Routes[message.Response]{
 		{Method: regginroute.GET, Path: "demo", Handle: a.HandleGetDemo},
 		{Method: regginroute.POST, Path: "demo", Handle: a.HandlePostDemo},
+		{Method: regginroute.POST, Path: "set", Handle: a.HandleSetDemo},
 	}
 }
 
@@ -61,5 +62,30 @@ func (a *A) HandlePostDemo(c *gin.Context) message.Response {
 		Code: 0,
 		Desc: "OK",
 		Data: data, // set response data here.
+	}
+}
+
+func (a *A) HandleSetDemo(c *gin.Context) message.Response {
+	type requestType struct {
+		X int
+	}
+	type responseType struct {
+		Y int
+	}
+	var req requestType
+	if err := c.ShouldBindJSON(&req); err != nil {
+		return message.Response{
+			Code: -1,
+			Desc: "wrong param",
+			Data: nil,
+		}
+	}
+	//write some logic
+	res := req.X * 2
+	//set return value
+	return message.Response{
+		Code: 0,
+		Desc: "OK",
+		Data: responseType{Y: res},
 	}
 }

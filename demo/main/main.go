@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/yyle88/regginroute"
@@ -23,6 +24,15 @@ func main() {
 	//group3.Use(middleware) // set a middleware only to this service
 	//group3.Use(middleware) // set a middleware only to this service
 	regginroute.PackageRoutes[message.Response](group3, &service.A3{}) //register the third service
+	// if you think it can not meet your needs, you can also write your own func
+	group3.GET("example", func(c *gin.Context) {
+		//write logic
+		c.JSON(http.StatusOK, message.Response{})
+	})
+	group3.POST("example", func(c *gin.Context) {
+		//write logic
+		c.JSON(http.StatusOK, message.Response{})
+	})
 
 	utilsregginroute.AssertDone(g.Run(fmt.Sprintf(":%d", 8080)))
 }
