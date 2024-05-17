@@ -5,10 +5,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/yyle88/done"
 	"github.com/yyle88/regginroute"
 	"github.com/yyle88/regginroute/demo/message"
 	"github.com/yyle88/regginroute/demo/service"
-	"github.com/yyle88/regginroute/utilsregginroute"
 )
 
 func main() {
@@ -34,5 +34,5 @@ func main() {
 		c.JSON(http.StatusOK, message.Response{})
 	})
 
-	utilsregginroute.AssertDone(g.Run(fmt.Sprintf(":%d", 8080)))
+	done.Done(g.Run(fmt.Sprintf(":%d", 8080)))
 }

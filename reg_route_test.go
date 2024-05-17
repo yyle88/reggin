@@ -8,7 +8,7 @@ import (
 
 	resty2 "github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/require"
-	"github.com/yyle88/regginroute/utilsregginroute"
+	"github.com/yyle88/regginroute/internal/utils"
 )
 
 func TestMain(m *testing.M) {
@@ -27,7 +27,7 @@ func TestPackageDemo(t *testing.T) {
 			SetQueryParams(map[string]string{}).Get("http://127.0.0.1:8080/v1/demo")
 		require.NoError(t, err)
 		require.Equal(t, 200, resp.StatusCode())
-		t.Log(utilsregginroute.SoftNeatString(result))
+		t.Log(utils.SoftNeat(result))
 	}
 	t.Log("-")
 	{
@@ -39,6 +39,6 @@ func TestPackageDemo(t *testing.T) {
 			SetBody(map[string]any{"x": 1}).Post("http://127.0.0.1:8080/v1/demo")
 		require.NoError(t, err)
 		require.Equal(t, 200, resp.StatusCode())
-		t.Log(utilsregginroute.SoftNeatString(result))
+		t.Log(utils.SoftNeat(result))
 	}
 }
