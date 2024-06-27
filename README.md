@@ -1,16 +1,20 @@
 # reggin
 
-reggin means register gin routes. 非常简单的gin路由注册器。 
+reggin means register some gin routes. 非常简单的gin路由注册器。 
 
 在我们使用gin做简单的http服务时，由于gin的处理函数类型为 `type HandlerFunc func(*Context)` 这就很不方便，按照某网红发明家的说辞就是，"很容易把我们累S"，因此我简单的对其进行了封装，让你能返回确定的自定义消息结构。
 
-Demo:
-[demoMain 文件](/demo/main/main.go)
-[Unittest 文件](/reg_route_test.go)
+第一种用法样例:
+[服务文件](/internal/demos/main/main.go)
+[测试文件](/reggin_test.go)
+
+第二种用法样例:
+[逻辑文件](/reggin/reghan/reghan.go)
+[测试文件](/reggin/reghan/reghan_test.go)
 
 ## 详细的解释
 
-比如以下为一种自定义结构：
+比如以下自定义结构：
 ```go
 package message
 

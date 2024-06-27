@@ -1,44 +1,48 @@
-package reggin
+package reggin_test
 
 import (
-	"fmt"
-	"os"
+	"net/http/httptest"
 	"testing"
 	"time"
 
 	resty2 "github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/require"
+	"github.com/yyle88/reggin/internal/demos/routers"
 	"github.com/yyle88/reggin/internal/utils"
 )
 
+var caseServerUrxBase string
+
 func TestMain(m *testing.M) {
-	fmt.Println("please exec go run demo/main/main.go")
+	engine := routers.NewRouters()
+
+	serverUt := httptest.NewServer(engine)
+	defer serverUt.Close()
+
+	caseServerUrxBase = serverUt.URL
 	m.Run()
-	os.Exit(0)
 }
 
 func TestDemo(t *testing.T) {
-	{
-		var result map[string]any
-		resp, err := resty2.New().SetRetryCount(3).
-			SetRetryWaitTime(time.Second * 2).
-			R().
-			SetResult(&result).
-			SetQueryParams(map[string]string{}).Get("http://127.0.0.1:8080/v1/demo")
-		require.NoError(t, err)
-		require.Equal(t, 200, resp.StatusCode())
-		t.Log(utils.SoftNeat(result))
-	}
-	t.Log("-")
-	{
-		var result map[string]any
-		resp, err := resty2.New().SetRetryCount(3).
-			SetRetryWaitTime(time.Second * 2).
-			R().
-			SetResult(&result).
-			SetBody(map[string]any{"x": 1}).Post("http://127.0.0.1:8080/v1/demo")
-		require.NoError(t, err)
-		require.Equal(t, 200, resp.StatusCode())
-		t.Log(utils.SoftNeat(result))
-	}
+	var result map[string]any
+	resp, err := resty2.New().SetRetryCount(3).
+		SetRetryWaitTime(time.Second * 2).
+		R().
+		SetResult(&result).
+		SetQueryParams(map[string]string{}).Get(caseServerUrxBase + "/v1/demo")
+	require.NoError(t, err)
+	require.Equal(t, 200, resp.StatusCode())
+	t.Log(utils.SoftNeat(result))
+}
+
+func TestDemo2(t *testing.T) {
+	var result map[string]any
+	resp, err := resty2.New().SetRetryCount(3).
+		SetRetryWaitTime(time.Second * 2).
+		R().
+		SetResult(&result).
+		SetBody(map[string]any{"x": 1}).Post(caseServerUrxBase + "/v1/demo")
+	require.NoError(t, err)
+	require.Equal(t, 200, resp.StatusCode())
+	t.Log(utils.SoftNeat(result))
 }

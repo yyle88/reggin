@@ -1,17 +1,15 @@
-package main
+package routers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/yyle88/done"
 	"github.com/yyle88/reggin"
-	"github.com/yyle88/reggin/demo/message"
-	"github.com/yyle88/reggin/demo/service"
+	"github.com/yyle88/reggin/internal/demos/message"
+	"github.com/yyle88/reggin/internal/demos/service"
 )
 
-func main() {
+func NewRouters() *gin.Engine {
 	g := gin.New()
 	g.Use(gin.Recovery()) // set a global middleware
 	//g.Use(middleware) // set a global middleware
@@ -33,6 +31,5 @@ func main() {
 		//write logic
 		c.JSON(http.StatusOK, message.Response{})
 	})
-
-	done.Done(g.Run(fmt.Sprintf(":%d", 8080)))
+	return g
 }

@@ -4,10 +4,11 @@ go 1.22.3
 
 require (
 	github.com/gin-gonic/gin v1.10.0
-	github.com/go-resty/resty/v2 v2.11.0
+	github.com/go-resty/resty/v2 v2.13.1
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.9.0
 	github.com/yyle88/done v1.0.5
+	github.com/yyle88/erero v1.0.0
 )
 
 require (
