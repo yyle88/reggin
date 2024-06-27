@@ -1,4 +1,4 @@
-package regginroute
+package reggin
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 
 	resty2 "github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/require"
-	"github.com/yyle88/regginroute/internal/utils"
+	"github.com/yyle88/reggin/internal/utils"
 )
 
 func TestMain(m *testing.M) {
@@ -17,7 +17,7 @@ func TestMain(m *testing.M) {
 	os.Exit(0)
 }
 
-func TestPackageDemo(t *testing.T) {
+func TestDemo(t *testing.T) {
 	{
 		var result map[string]any
 		resp, err := resty2.New().SetRetryCount(3).

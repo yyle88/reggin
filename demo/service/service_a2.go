@@ -2,16 +2,16 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/yyle88/regginroute"
-	"github.com/yyle88/regginroute/demo/message"
+	"github.com/yyle88/reggin"
+	"github.com/yyle88/reggin/demo/message"
 )
 
 type A2 struct{}
 
-func (a *A2) GetRoutes() regginroute.Routes[message.Response] {
-	return regginroute.Routes[message.Response]{
-		{Method: regginroute.GET, Path: "demo", Handle: a.HandleGetDemo},
-		{Method: regginroute.POST, Path: "demo", Handle: a.HandlePostDemo},
+func (a *A2) GetRoutes() reggin.Routes[message.Response] {
+	return reggin.Routes[message.Response]{
+		{Method: reggin.GET, Path: "demo", Handle: a.HandleGetDemo},
+		{Method: reggin.POST, Path: "demo", Handle: a.HandlePostDemo},
 	}
 }
 

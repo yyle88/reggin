@@ -2,8 +2,8 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/yyle88/regginroute"
-	"github.com/yyle88/regginroute/demo/message"
+	"github.com/yyle88/reggin"
+	"github.com/yyle88/reggin/demo/message"
 )
 
 // A define a service
@@ -12,11 +12,11 @@ type A struct{}
 
 // GetRoutes defile routers
 // 自定义的接口
-func (a *A) GetRoutes() regginroute.Routes[message.Response] {
-	return regginroute.Routes[message.Response]{
-		{Method: regginroute.GET, Path: "demo", Handle: a.HandleGetDemo},
-		{Method: regginroute.POST, Path: "demo", Handle: a.HandlePostDemo},
-		{Method: regginroute.POST, Path: "set", Handle: a.HandleSetDemo},
+func (a *A) GetRoutes() reggin.Routes[message.Response] {
+	return reggin.Routes[message.Response]{
+		{Method: reggin.GET, Path: "demo", Handle: a.HandleGetDemo},
+		{Method: reggin.POST, Path: "demo", Handle: a.HandlePostDemo},
+		{Method: reggin.POST, Path: "set", Handle: a.HandleSetDemo},
 	}
 }
 

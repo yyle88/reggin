@@ -1,4 +1,4 @@
-package regginroute
+package reggin
 
 import (
 	"net/http"
@@ -18,7 +18,7 @@ const (
 )
 
 // RequestHandlerFunc 就是需要实现每个api的处理逻辑
-// 这里使用范型的考虑是，避免返回值中出现不符合类型的，比如笔误返回其它类型(常见的是 return err 这种笔误)
+// 这里使用泛型的考虑是，避免返回值中出现不符合类型的，比如笔误返回其它类型(常见的是 return err 这种笔误)
 // 这样就能在编码时确保所有的返回值都是我们定义的数据格式(通常认为同一组api的返回值，遵循相同的数据格式，比如数据data，错误码code，错误信息msg等等字段)
 type RequestHandlerFunc[T any] func(c *gin.Context) T
 

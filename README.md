@@ -1,6 +1,6 @@
-# regginroute
+# reggin
 
-regginroute means register gin routes. 非常简单的gin路由注册器。 
+reggin means register gin routes. 非常简单的gin路由注册器。 
 
 在我们使用gin做简单的http服务时，由于gin的处理函数类型为 `type HandlerFunc func(*Context)` 这就很不方便，按照某网红发明家的说辞就是，"很容易把我们累S"，因此我简单的对其进行了封装，让你能返回确定的自定义消息结构。
 
@@ -22,7 +22,7 @@ type Response struct {
 ```
 当你在注册路由时使用：
 ```
-regginroute.PackageRoutes[message.Response](g.Group("v2"), &service.A2{})
+reggin.PackageRoutes[message.Response](g.Group("v2"), &service.A2{})
 ```
 这时就能限制你的处理函数返回值，只能是自定义的`message.Response`结构。
 
@@ -32,17 +32,17 @@ regginroute.PackageRoutes[message.Response](g.Group("v2"), &service.A2{})
 
 当你注册完服务
 ```
-regginroute.PackageRoutes[message.Response](g.Group("v2"), &service.A2{})
+reggin.PackageRoutes[message.Response](g.Group("v2"), &service.A2{})
 ```
 
 你就可以这样把路由注册进服务里：
 ```
 type A2 struct{}
 
-func (a *A2) GetRoutes() regginroute.Routes[message.Response] {
-	return regginroute.Routes[message.Response]{
-		{Method: regginroute.GET, Path: "demo", Handle: a.HandleGetDemo},
-		{Method: regginroute.POST, Path: "demo", Handle: a.HandlePostDemo},
+func (a *A2) GetRoutes() reggin.Routes[message.Response] {
+	return reggin.Routes[message.Response]{
+		{Method: reggin.GET, Path: "demo", Handle: a.HandleGetDemo},
+		{Method: reggin.POST, Path: "demo", Handle: a.HandlePostDemo},
 	}
 }
 ```
