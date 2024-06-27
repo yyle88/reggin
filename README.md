@@ -9,10 +9,10 @@ reggin means register some gin routes. 非常简单的gin路由注册器。
 [测试文件](/reggin_test.go)
 
 第二种用法样例:
-[逻辑文件](/reggin/reghan/reghan.go)
-[测试文件](/reggin/reghan/reghan_test.go)
+[逻辑文件](/reghan/reghan.go)
+[测试文件](/reghan/reghan_test.go)
 
-## 详细的解释
+## 详细的解释-只是第一种用法的解释
 
 比如以下自定义结构：
 ```go

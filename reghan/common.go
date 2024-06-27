@@ -1,5 +1,7 @@
 package reghan
 
+// ResponseType 这个只是自定义的消息，当然实际上它不和任何逻辑挂钩
+// 在项目中你可以使用自定义的消息，这里只是提供个简单的样例
 type ResponseType struct {
 	Code int    `json:"code"`
 	Desc string `json:"desc"`
