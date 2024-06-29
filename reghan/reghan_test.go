@@ -32,6 +32,14 @@ func TestMain(m *testing.M) {
 	//使用普通JSON传递参数
 	engine.POST("/eee", Handle1x(eeeHandle, MakeResponse[map[string]string]))
 
+	//测试返回基本类型，逻辑和前面的基本相同
+	//返回基本类型而非指针
+	engine.POST("/fff", Handle0a(fffHandle, NewResponse[string]))
+	//返回基本类型而非指针
+	engine.POST("/ggg", Handle1b(gggHandle, NewResponse[int]))
+	//返回基本类型而非指针
+	engine.POST("/hhh", Handle1a(hhhHandle, parseArg[map[string]int], NewResponse[bool]))
+
 	serverUt := httptest.NewServer(engine)
 	defer serverUt.Close()
 
