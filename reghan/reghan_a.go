@@ -32,6 +32,6 @@ func Handle1a[ARG, RES any, RESPONSE any](run Handle1aFunc[ARG, RES], parseReq P
 	}
 }
 
-func Handle1b[ARG, RES any, RESPONSE any](run Handle1aFunc[ARG, RES], respFunc MakeRespBase[RES, RESPONSE]) gin.HandlerFunc {
+func HandleXa[ARG, RES any, RESPONSE any](run Handle1aFunc[ARG, RES], respFunc MakeRespBase[RES, RESPONSE]) gin.HandlerFunc {
 	return Handle1a[ARG, RES, RESPONSE](run, BindJson[ARG], respFunc)
 }

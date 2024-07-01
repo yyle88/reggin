@@ -24,21 +24,25 @@ func TestMain(m *testing.M) {
 		c.JSON(http.StatusOK, res)
 	})
 	//没有参数
-	engine.POST("/bbb", Handle0p(bbbHandle, MakeResponse[map[string]string]))
+	engine.POST("/bbb", Handle0p(bbbHandle, GinResponse[map[string]string]))
 	//推荐使用这种写法这样在路由表里就能一眼看出调用的函数和返回的结果
-	engine.POST("/ccc", Handle1p(cccHandle, parseArg[map[string]int], MakeResponse[map[string]string]))
+	engine.POST("/ccc", Handle1p(cccHandle, parseArg[map[string]int], GinResponse[map[string]string]))
 	//推荐使用
-	engine.POST("/ddd", Handle1p(dddHandle, BindJson[map[string]int], MakeResponse[map[string]string]))
+	engine.POST("/ddd", Handle1p(dddHandle, BindJson[map[string]int], GinResponse[map[string]string]))
 	//使用普通JSON传递参数
-	engine.POST("/eee", Handle1x(eeeHandle, MakeResponse[map[string]string]))
+	engine.POST("/eee", HandleXp(eeeHandle, GinResponse[map[string]string]))
 
 	//测试返回基本类型，逻辑和前面的基本相同
 	//返回基本类型而非指针
 	engine.POST("/fff", Handle0a(fffHandle, NewResponse[string]))
 	//返回基本类型而非指针
-	engine.POST("/ggg", Handle1b(gggHandle, NewResponse[int]))
+	engine.POST("/ggg", HandleXa(gggHandle, NewResponse[int]))
 	//返回基本类型而非指针
 	engine.POST("/hhh", Handle1a(hhhHandle, parseArg[map[string]int], NewResponse[bool]))
+	//哦对返回数组也非指针
+	engine.POST("/iii", Handle1a(iiiHandle, parseArg[map[string]int], NewResponse[[]string]))
+	//前面返回*map是不科学的，这里返回map相对好些，也是非指针的返回类型
+	engine.POST("/jjj", Handle1a(jjjHandle, parseArg[map[string]int], NewResponse[map[string]string]))
 
 	serverUt := httptest.NewServer(engine)
 	defer serverUt.Close()
@@ -64,7 +68,14 @@ func cccHandle(arg *map[string]int) (*map[string]string, error) {
 }
 
 func dddHandle(arg *map[string]int) (*map[string]string, error) {
-	return nil, erero.New("wrong")
+	if len(*arg) == 0 {
+		return nil, erero.New("wrong")
+	}
+	res := make(map[string]string, len(*arg))
+	for k, v := range *arg {
+		res[k] = strconv.Itoa(v)
+	}
+	return &res, nil
 }
 
 func eeeHandle(arg *map[string]int) (*map[string]string, error) {
@@ -117,15 +128,26 @@ func TestCcc(t *testing.T) {
 }
 
 func TestDdd(t *testing.T) {
-	var data map[string]string
-	var res = ResponseType{Data: &data}
-	response, err := resty2.New().R().SetBody(map[string]int{
-		"a": 100,
-	}).SetResult(&res).Post(caseServerUrxBase + "/ddd")
-	require.NoError(t, err)
-	require.Equal(t, http.StatusOK, response.StatusCode())
-	t.Log(string(response.Body()))
-	require.Equal(t, -1, res.Code)
+	{
+		var data map[string]string
+		var res = ResponseType{Data: &data}
+		response, err := resty2.New().R().SetBody(map[string]int{
+			"a": 100,
+		}).SetResult(&res).Post(caseServerUrxBase + "/ddd")
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, response.StatusCode())
+		t.Log(string(response.Body()))
+		require.Equal(t, map[string]string{"a": "100"}, data)
+	}
+	{
+		var data map[string]string
+		var res = ResponseType{Data: &data}
+		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/ddd")
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, response.StatusCode())
+		t.Log(string(response.Body()))
+		require.Equal(t, -1, res.Code)
+	}
 }
 
 func TestEee(t *testing.T) {
