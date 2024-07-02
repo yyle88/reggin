@@ -11,7 +11,7 @@ import (
 	"github.com/yyle88/erero"
 )
 
-func lllHandle(ctx *gin.Context, arg *map[string]int) (*map[string]string, error) {
+func kkkHandle(ctx *gin.Context, arg *map[string]int) (map[string]string, error) {
 	if len(*arg) == 0 {
 		return nil, erero.New("wrong")
 	}
@@ -19,17 +19,17 @@ func lllHandle(ctx *gin.Context, arg *map[string]int) (*map[string]string, error
 	for k, v := range *arg {
 		res[k] = strconv.Itoa(v)
 	}
-	return &res, nil
+	return res, nil
 }
 
-func TestLll(t *testing.T) {
+func TestKkk(t *testing.T) {
 	{
 		var data map[string]string
 		var res = ResponseType{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
-		}).SetResult(&res).Post(caseServerUrxBase + "/lll")
+		}).SetResult(&res).Post(caseServerUrxBase + "/kkk")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
 		t.Log(string(response.Body()))
@@ -38,7 +38,7 @@ func TestLll(t *testing.T) {
 	{
 		var data map[string]string
 		var res = ResponseType{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/lll")
+		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/kkk")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
 		t.Log(string(response.Body()))

@@ -44,6 +44,11 @@ func TestMain(m *testing.M) {
 	//前面返回*map是不科学的，这里返回map相对好些，也是非指针的返回类型
 	engine.POST("/jjj", Handle1a(jjjHandle, parseArg[map[string]int], NewResponse[map[string]string]))
 
+	//这里带 gin.Context 做参数的那种处理函数的逻辑
+	engine.POST("/kkk", Handle1b(kkkHandle, parseArg[map[string]int], NewResponse[map[string]string]))
+	//这里带 gin.Context 做参数的，但这里处理函数的返回的指针类型
+	engine.POST("/lll", Handle1c(lllHandle, parseArg[map[string]int], GinResponse[map[string]string]))
+
 	serverUt := httptest.NewServer(engine)
 	defer serverUt.Close()
 
