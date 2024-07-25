@@ -29,7 +29,7 @@ func TestMain(m *testing.M) {
 	//推荐使用这种写法这样在路由表里就能一眼看出调用的函数和返回的结果
 	engine.POST("/ccc", Handle1p(cccHandle, parseArg[map[string]int], GinResponse[map[string]string]))
 	//推荐使用
-	engine.POST("/ddd", Handle1p(dddHandle, BindJson[map[string]int], GinResponse[map[string]string]))
+	engine.POST("/ddd", Handle1p(dddHandle, BIND[map[string]int], GinResponse[map[string]string]))
 	//使用普通JSON传递参数
 	engine.POST("/eee", HandleXp(eeeHandle, GinResponse[map[string]string]))
 

@@ -8,9 +8,19 @@ import (
 
 type ParseReqFunc[ARG any] func(c *gin.Context) (*ARG, error)
 
-func BindJson[ARG any](ctx *gin.Context) (arg *ARG, err error) {
+// BIND 绑定参数，这个函数名太长其实不太有利于使用，但有时为了逻辑清晰也可以用它
+func BIND[ARG any](ctx *gin.Context) (arg *ARG, err error) {
 	var req ARG
 	if erx := ctx.ShouldBindBodyWith(&req, binding.JSON); erx != nil {
+		return nil, erero.WithMessage(erx, "CAN NOT BIND REQ")
+	}
+	return &req, nil
+}
+
+// B 也是绑定参数，在使用时这块的字符越少越有利于突出泛型本身的类型，因此使用这个很短的函数名
+func B[ARG any](ctx *gin.Context) (arg *ARG, err error) {
+	var req ARG
+	if erx := ctx.ShouldBindJSON(&req); erx != nil {
 		return nil, erero.WithMessage(erx, "CAN NOT BIND REQ")
 	}
 	return &req, nil
