@@ -25,29 +25,29 @@ func TestMain(m *testing.M) {
 		c.JSON(http.StatusOK, res)
 	})
 	//没有参数
-	engine.POST("/bbb", Handle0p(bbbHandle, GinResponse[map[string]string]))
+	engine.POST("/bbb", P0(bbbHandle, GinResponse[map[string]string]))
 	//推荐使用这种写法这样在路由表里就能一眼看出调用的函数和返回的结果
-	engine.POST("/ccc", Handle1p(cccHandle, parseArg[map[string]int], GinResponse[map[string]string]))
+	engine.POST("/ccc", P1(cccHandle, parseArg[map[string]int], GinResponse[map[string]string]))
 	//推荐使用
-	engine.POST("/ddd", Handle1p(dddHandle, BIND[map[string]int], GinResponse[map[string]string]))
+	engine.POST("/ddd", P1(dddHandle, BIND[map[string]int], GinResponse[map[string]string]))
 	//使用普通JSON传递参数
-	engine.POST("/eee", HandleXp(eeeHandle, GinResponse[map[string]string]))
+	engine.POST("/eee", PX(eeeHandle, GinResponse[map[string]string]))
 
 	//返回基本类型而非指针，测试返回基本类型，逻辑和前面的基本相同
-	engine.POST("/fff", Handle0p(fffHandle, NewResponse[string]))
+	engine.POST("/fff", P0(fffHandle, NewResponse[string]))
 	//返回基本类型而非指针
-	engine.POST("/ggg", HandleXp(gggHandle, NewResponse[int]))
+	engine.POST("/ggg", PX(gggHandle, NewResponse[int]))
 	//返回基本类型而非指针
-	engine.POST("/hhh", Handle1p(hhhHandle, parseArg[map[string]int], NewResponse[bool]))
+	engine.POST("/hhh", P1(hhhHandle, parseArg[map[string]int], Rt[bool]))
 	//哦对返回数组也非指针
-	engine.POST("/iii", Handle1p(iiiHandle, parseArg[map[string]int], NewResponse[[]string]))
+	engine.POST("/iii", P1(iiiHandle, parseArg[map[string]int], Rt[[]string]))
 	//前面返回*map是不科学的，这里返回map相对好些，也是非指针的返回类型
-	engine.POST("/jjj", Handle1p(jjjHandle, parseArg[map[string]int], NewResponse[map[string]string]))
+	engine.POST("/jjj", P1(jjjHandle, parseArg[map[string]int], Rt[map[string]string]))
 
 	//这里带 gin.Context 做参数的那种处理函数的逻辑
-	engine.POST("/kkk", Handle1c(kkkHandle, parseArg[map[string]int], NewResponse[map[string]string]))
+	engine.POST("/kkk", C1(kkkHandle, parseArg[map[string]int], Rt[map[string]string]))
 	//这里带 gin.Context 做参数的，但这里处理函数的返回的指针类型
-	engine.POST("/lll", Handle1c(lllHandle, parseArg[map[string]int], GinResponse[map[string]string]))
+	engine.POST("/lll", C1(lllHandle, parseArg[map[string]int], Rp[map[string]string]))
 
 	serverUt := httptest.NewServer(engine)
 	defer serverUt.Close()

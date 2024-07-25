@@ -43,3 +43,11 @@ func GinResponse[RES any](ctx *gin.Context, res *RES, erx error) *ResponseType {
 		}
 	}
 }
+
+func Rt[RES any](ctx *gin.Context, res RES, erx error) *ResponseType {
+	return NewResponse(ctx, res, erx)
+}
+
+func Rp[RES any](ctx *gin.Context, res *RES, erx error) *ResponseType {
+	return GinResponse(ctx, res, erx)
+}

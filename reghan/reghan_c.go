@@ -30,6 +30,14 @@ func Handle1c[ARG, RES any, RESPONSE any](run Handle1cFunc[ARG, RES], parseReq P
 	}
 }
 
-func HandleXc[ARG, RES any, RESPONSE any](run Handle1cFunc[ARG, RES], respFunc MakeRespFunc[RES, RESPONSE]) gin.HandlerFunc {
+func C0[RES any, RESPONSE any](run Handle0cFunc[RES], respFunc MakeRespFunc[RES, RESPONSE]) gin.HandlerFunc {
+	return Handle0c(run, respFunc)
+}
+
+func C1[ARG, RES any, RESPONSE any](run Handle1cFunc[ARG, RES], parseReq ParseReqFunc[ARG], respFunc MakeRespFunc[RES, RESPONSE]) gin.HandlerFunc {
+	return Handle1c(run, parseReq, respFunc)
+}
+
+func CX[ARG, RES any, RESPONSE any](run Handle1cFunc[ARG, RES], respFunc MakeRespFunc[RES, RESPONSE]) gin.HandlerFunc {
 	return Handle1c[ARG, RES, RESPONSE](run, BIND[ARG], respFunc)
 }
