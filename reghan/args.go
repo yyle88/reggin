@@ -25,3 +25,12 @@ func B[ARG any](ctx *gin.Context) (arg *ARG, err error) {
 	}
 	return &req, nil
 }
+
+// Q 也是绑定参数，只是绑定的是 uri param，也就是 GET 请求的参数，这时候需要定义 form 标签
+func Q[ARG any](ctx *gin.Context) (arg *ARG, err error) {
+	var req ARG
+	if erx := ctx.ShouldBindQuery(&req); erx != nil {
+		return nil, erero.WithMessage(erx, "CAN NOT BIND REQ")
+	}
+	return &req, nil
+}
