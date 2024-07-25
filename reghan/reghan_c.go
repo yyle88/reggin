@@ -7,8 +7,8 @@ import (
 	"github.com/yyle88/erero"
 )
 
-type Handle0cFunc[RES any] func(ctx *gin.Context) (RES, error)                //当需要返回非指针类型时，比如 int/string/bool/float64 这些基本类型
-type Handle1cFunc[ARG, RES any] func(ctx *gin.Context, arg *ARG) (RES, error) //使用基本类型做返回值，这时候结果也最好是基本类型，而非指针类型
+type Handle0cFunc[RES any] func(ctx *gin.Context) (RES, error)                //当在逻辑中还需要用到 context 时，使用这个函数注册路由
+type Handle1cFunc[ARG, RES any] func(ctx *gin.Context, arg *ARG) (RES, error) //当在逻辑中既需要 context 还需要参数时，使用这个函数组册路由
 
 func Handle0c[RES any, RESPONSE any](run Handle0cFunc[RES], respFunc MakeRespFunc[RES, RESPONSE]) gin.HandlerFunc {
 	return func(ctx *gin.Context) {

@@ -7,8 +7,8 @@ import (
 	"github.com/yyle88/erero"
 )
 
-type Handle0pFunc[RES any] func() (RES, error)              //当需要返回非指针类型时，比如 int/string/bool/float64 这些基本类型
-type Handle1pFunc[ARG, RES any] func(arg *ARG) (RES, error) //使用基本类型做返回值，这时候结果也最好是基本类型，而非指针类型
+type Handle0pFunc[RES any] func() (RES, error)              //当没有参数时，比如有的接口就是没有参数的，使用这个接口注册路由
+type Handle1pFunc[ARG, RES any] func(arg *ARG) (RES, error) //通常情况下请求都需要一个参数，就使用这个接口注册路由
 
 func Handle0p[RES any, RESPONSE any](run Handle0pFunc[RES], respFunc MakeRespFunc[RES, RESPONSE]) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
