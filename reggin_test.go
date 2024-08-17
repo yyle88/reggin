@@ -32,7 +32,7 @@ func TestDemo(t *testing.T) {
 		SetQueryParams(map[string]string{}).Get(caseServerUrxBase + "/v1/demo")
 	require.NoError(t, err)
 	require.Equal(t, 200, resp.StatusCode())
-	t.Log(utils.SoftNeat(result))
+	t.Log(utils.Neat(result))
 }
 
 func TestDemo2(t *testing.T) {
@@ -44,5 +44,5 @@ func TestDemo2(t *testing.T) {
 		SetBody(map[string]any{"x": 1}).Post(caseServerUrxBase + "/v1/demo")
 	require.NoError(t, err)
 	require.Equal(t, 200, resp.StatusCode())
-	t.Log(utils.SoftNeat(result))
+	t.Log(utils.Neat(result))
 }
