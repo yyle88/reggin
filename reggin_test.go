@@ -7,8 +7,8 @@ import (
 
 	resty2 "github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/require"
+	"github.com/yyle88/neatjson/neatjsons"
 	"github.com/yyle88/reggin/internal/demos/routers"
-	"github.com/yyle88/reggin/internal/utils"
 )
 
 var caseServerUrxBase string
@@ -32,7 +32,7 @@ func TestDemo(t *testing.T) {
 		SetQueryParams(map[string]string{}).Get(caseServerUrxBase + "/v1/demo")
 	require.NoError(t, err)
 	require.Equal(t, 200, resp.StatusCode())
-	t.Log(utils.Neat(result))
+	t.Log(neatjsons.S(result))
 }
 
 func TestDemo2(t *testing.T) {
@@ -44,5 +44,5 @@ func TestDemo2(t *testing.T) {
 		SetBody(map[string]any{"x": 1}).Post(caseServerUrxBase + "/v1/demo")
 	require.NoError(t, err)
 	require.Equal(t, 200, resp.StatusCode())
-	t.Log(utils.Neat(result))
+	t.Log(neatjsons.S(result))
 }
