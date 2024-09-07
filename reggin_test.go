@@ -11,7 +11,7 @@ import (
 	"github.com/yyle88/reggin/internal/demos/routers"
 )
 
-var caseServerUrxBase string
+var caseUrxBase string
 
 func TestMain(m *testing.M) {
 	engine := routers.NewRouters()
@@ -19,7 +19,7 @@ func TestMain(m *testing.M) {
 	serverUt := httptest.NewServer(engine)
 	defer serverUt.Close()
 
-	caseServerUrxBase = serverUt.URL
+	caseUrxBase = serverUt.URL
 	m.Run()
 }
 
@@ -29,7 +29,7 @@ func TestDemo(t *testing.T) {
 		SetRetryWaitTime(time.Second * 2).
 		R().
 		SetResult(&result).
-		SetQueryParams(map[string]string{}).Get(caseServerUrxBase + "/v1/demo")
+		SetQueryParams(map[string]string{}).Get(caseUrxBase + "/v1/demo")
 	require.NoError(t, err)
 	require.Equal(t, 200, resp.StatusCode())
 	t.Log(neatjsons.S(result))
@@ -41,7 +41,7 @@ func TestDemo2(t *testing.T) {
 		SetRetryWaitTime(time.Second * 2).
 		R().
 		SetResult(&result).
-		SetBody(map[string]any{"x": 1}).Post(caseServerUrxBase + "/v1/demo")
+		SetBody(map[string]any{"x": 1}).Post(caseUrxBase + "/v1/demo")
 	require.NoError(t, err)
 	require.Equal(t, 200, resp.StatusCode())
 	t.Log(neatjsons.S(result))
