@@ -8,13 +8,13 @@ import (
 	resty2 "github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/neatjson/neatjsons"
-	"github.com/yyle88/reggin/internal/demos/routers"
+	"github.com/yyle88/reggin/internal/demos/reggin_demo1x/routers"
 )
 
 var caseUrxBase string
 
 func TestMain(m *testing.M) {
-	engine := routers.NewRouters()
+	engine := routers.NewGinEngineWithRouters()
 
 	serverUt := httptest.NewServer(engine)
 	defer serverUt.Close()

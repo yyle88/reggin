@@ -2,22 +2,22 @@ package regginservice
 
 import "github.com/gin-gonic/gin"
 
-type Service interface {
+type RegGinServiceIFace interface {
 	RegEngine(engine *gin.Engine)
 }
 
-func RegGinEngine(engine *gin.Engine, service Service) {
+func RegGinEngine(engine *gin.Engine, service RegGinServiceIFace) {
 	service.RegEngine(engine)
 }
 
-type GinRouteGroup interface {
+type GinRouteGroupIFace interface {
 	RegRoutes(group *gin.RouterGroup)
 }
 
-func RegGinRouteGroup(group *gin.RouterGroup, routeGroup GinRouteGroup) {
+func RegGinRouteGroup(group *gin.RouterGroup, routeGroup GinRouteGroupIFace) {
 	routeGroup.RegRoutes(group)
 }
 
-func SetGinRouteGroup(engine *gin.Engine, relativePath string, routeGroup GinRouteGroup) {
+func SetGinRouteGroup(engine *gin.Engine, relativePath string, routeGroup GinRouteGroupIFace) {
 	routeGroup.RegRoutes(engine.Group(relativePath))
 }

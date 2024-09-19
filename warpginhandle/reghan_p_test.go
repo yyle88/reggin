@@ -25,29 +25,29 @@ func TestMain(m *testing.M) {
 		c.JSON(http.StatusOK, res)
 	})
 	//没有参数
-	engine.POST("/bbb", P0(bbbHandle, GinResponse[map[string]string]))
+	engine.POST("/bbb", P0(bbbHandle, GinResponseExample[map[string]string]))
 	//推荐使用这种写法这样在路由表里就能一眼看出调用的函数和返回的结果
-	engine.POST("/ccc", P1(cccHandle, parseArg[map[string]int], GinResponse[map[string]string]))
+	engine.POST("/ccc", P1(cccHandle, parseArg[map[string]int], GinResponseExample[map[string]string]))
 	//推荐使用
-	engine.POST("/ddd", P1(dddHandle, BIND[map[string]int], GinResponse[map[string]string]))
+	engine.POST("/ddd", P1(dddHandle, BIND[map[string]int], GinResponseExample[map[string]string]))
 	//使用普通JSON传递参数
-	engine.POST("/eee", PX(eeeHandle, GinResponse[map[string]string]))
+	engine.POST("/eee", PX(eeeHandle, GinResponseExample[map[string]string]))
 
 	//返回基本类型而非指针，测试返回基本类型，逻辑和前面的基本相同
-	engine.POST("/fff", P0(fffHandle, NewResponse[string]))
+	engine.POST("/fff", P0(fffHandle, NewResponseExample[string]))
 	//返回基本类型而非指针
-	engine.POST("/ggg", PX(gggHandle, NewResponse[int]))
+	engine.POST("/ggg", PX(gggHandle, NewResponseExample[int]))
 	//返回基本类型而非指针
-	engine.POST("/hhh", P1(hhhHandle, parseArg[map[string]int], Rt[bool]))
+	engine.POST("/hhh", P1(hhhHandle, parseArg[map[string]int], newRExample[bool]))
 	//哦对返回数组也非指针
-	engine.POST("/iii", P1(iiiHandle, parseArg[map[string]int], Rt[[]string]))
+	engine.POST("/iii", P1(iiiHandle, parseArg[map[string]int], newRExample[[]string]))
 	//前面返回*map是不科学的，这里返回map相对好些，也是非指针的返回类型
-	engine.POST("/jjj", P1(jjjHandle, parseArg[map[string]int], Rt[map[string]string]))
+	engine.POST("/jjj", P1(jjjHandle, parseArg[map[string]int], newRExample[map[string]string]))
 
 	//这里带 gin.Context 做参数的那种处理函数的逻辑
-	engine.POST("/kkk", C1(kkkHandle, parseArg[map[string]int], Rt[map[string]string]))
+	engine.POST("/kkk", C1(kkkHandle, parseArg[map[string]int], newRExample[map[string]string]))
 	//这里带 gin.Context 做参数的，但这里处理函数的返回的指针类型
-	engine.POST("/lll", C1(lllHandle, parseArg[map[string]int], Rp[map[string]string]))
+	engine.POST("/lll", C1(lllHandle, parseArg[map[string]int], newPExample[map[string]string]))
 
 	serverUt := httptest.NewServer(engine)
 	defer serverUt.Close()
@@ -152,7 +152,7 @@ func TestAaa(t *testing.T) {
 
 func TestBbb(t *testing.T) {
 	var data map[string]string
-	var res = ResponseType{Data: &data}
+	var res = ResponseExample{Data: &data}
 	response, err := resty2.New().R().SetResult(&res).Post(caseServerUrxBase + "/bbb")
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, response.StatusCode())
@@ -162,7 +162,7 @@ func TestBbb(t *testing.T) {
 
 func TestCcc(t *testing.T) {
 	var data map[string]string
-	var res = ResponseType{Data: &data}
+	var res = ResponseExample{Data: &data}
 	response, err := resty2.New().R().SetBody(map[string]int{
 		"a": 100,
 	}).SetResult(&res).Post(caseServerUrxBase + "/ccc")
@@ -176,7 +176,7 @@ func TestCcc(t *testing.T) {
 func TestDdd(t *testing.T) {
 	{
 		var data map[string]string
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{
 			"a": 100,
 		}).SetResult(&res).Post(caseServerUrxBase + "/ddd")
@@ -187,7 +187,7 @@ func TestDdd(t *testing.T) {
 	}
 	{
 		var data map[string]string
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/ddd")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
@@ -198,7 +198,7 @@ func TestDdd(t *testing.T) {
 
 func TestEee(t *testing.T) {
 	var data map[string]string
-	var res = ResponseType{Data: &data}
+	var res = ResponseExample{Data: &data}
 	response, err := resty2.New().R().SetBody(map[string]int{
 		"a": 100,
 	}).SetResult(&res).Post(caseServerUrxBase + "/eee")
@@ -211,7 +211,7 @@ func TestEee(t *testing.T) {
 
 func TestFff(t *testing.T) {
 	var data string
-	var res = ResponseType{Data: &data}
+	var res = ResponseExample{Data: &data}
 	response, err := resty2.New().R().SetResult(&res).Post(caseServerUrxBase + "/fff")
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, response.StatusCode())
@@ -221,7 +221,7 @@ func TestFff(t *testing.T) {
 
 func TestGgg(t *testing.T) {
 	var data int
-	var res = ResponseType{Data: &data}
+	var res = ResponseExample{Data: &data}
 	response, err := resty2.New().R().SetBody(map[string]int{
 		"a": 100,
 		"b": 200,
@@ -235,7 +235,7 @@ func TestGgg(t *testing.T) {
 func TestHhh(t *testing.T) {
 	{
 		var data bool
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
@@ -247,7 +247,7 @@ func TestHhh(t *testing.T) {
 	}
 	{
 		var data bool
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
@@ -264,7 +264,7 @@ func TestHhh(t *testing.T) {
 func TestIii(t *testing.T) {
 	{
 		var data []string
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
@@ -276,7 +276,7 @@ func TestIii(t *testing.T) {
 	}
 	{
 		var data []string
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/iii")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
@@ -288,7 +288,7 @@ func TestIii(t *testing.T) {
 func TestJjj(t *testing.T) {
 	{
 		var data map[string]string
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
@@ -300,7 +300,7 @@ func TestJjj(t *testing.T) {
 	}
 	{
 		var data map[string]string
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/jjj")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())

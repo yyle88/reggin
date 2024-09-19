@@ -36,7 +36,7 @@ func lllHandle(ctx *gin.Context, arg *map[string]int) (*map[string]string, error
 func TestKkk(t *testing.T) {
 	{
 		var data map[string]string
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
@@ -48,7 +48,7 @@ func TestKkk(t *testing.T) {
 	}
 	{
 		var data map[string]string
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/kkk")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
@@ -60,7 +60,7 @@ func TestKkk(t *testing.T) {
 func TestLll(t *testing.T) {
 	{
 		var data map[string]string
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
@@ -72,7 +72,7 @@ func TestLll(t *testing.T) {
 	}
 	{
 		var data map[string]string
-		var res = ResponseType{Data: &data}
+		var res = ResponseExample{Data: &data}
 		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/lll")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())

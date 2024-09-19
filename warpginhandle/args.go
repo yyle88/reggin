@@ -6,7 +6,7 @@ import (
 	"github.com/yyle88/erero"
 )
 
-type ParseReqFunc[ARG any] func(c *gin.Context) (*ARG, error)
+type ParseArgFunc[ARG any] func(c *gin.Context) (*ARG, error)
 
 // BIND 绑定参数，这个函数名太长其实不太有利于使用，但有时为了逻辑清晰也可以用它
 func BIND[ARG any](ctx *gin.Context) (arg *ARG, err error) {

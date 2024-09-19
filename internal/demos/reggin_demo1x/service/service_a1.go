@@ -3,16 +3,16 @@ package service
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/yyle88/reggin"
-	"github.com/yyle88/reggin/internal/demos/message"
+	"github.com/yyle88/reggin/internal/demos/reggin_demo1x/message"
 )
 
-// A define a service
+// A1 define a service
 // 自定义的服务
-type A struct{}
+type A1 struct{}
 
 // GetRoutes defile routers
 // 自定义的接口
-func (a *A) GetRoutes() reggin.Routes[message.Response] {
+func (a *A1) GetRoutes() reggin.Routes[message.Response] {
 	return reggin.Routes[message.Response]{
 		{Method: reggin.GET, Path: "demo", Handle: a.HandleGetDemo},
 		{Method: reggin.POST, Path: "demo", Handle: a.HandlePostDemo},
@@ -20,7 +20,7 @@ func (a *A) GetRoutes() reggin.Routes[message.Response] {
 	}
 }
 
-func (a *A) HandleGetDemo(c *gin.Context) message.Response {
+func (a *A1) HandleGetDemo(c *gin.Context) message.Response {
 	//write logic here 在这里实现你的逻辑
 	return message.Response{
 		Code: 0,
@@ -29,7 +29,7 @@ func (a *A) HandleGetDemo(c *gin.Context) message.Response {
 	}
 }
 
-func (a *A) HandlePostDemo(c *gin.Context) message.Response {
+func (a *A1) HandlePostDemo(c *gin.Context) message.Response {
 	//write logic here 在这里实现你的逻辑
 	//example:
 	//defile request type. define it here is more clean than defile it outside the func.
@@ -65,7 +65,7 @@ func (a *A) HandlePostDemo(c *gin.Context) message.Response {
 	}
 }
 
-func (a *A) HandleSetDemo(c *gin.Context) message.Response {
+func (a *A1) HandleSetDemo(c *gin.Context) message.Response {
 	type requestType struct {
 		X int
 	}

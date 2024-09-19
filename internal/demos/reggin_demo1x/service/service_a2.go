@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/yyle88/reggin"
-	"github.com/yyle88/reggin/internal/demos/message"
+	"github.com/yyle88/reggin/internal/demos/reggin_demo1x/message"
 )
 
 type A2 struct{}
