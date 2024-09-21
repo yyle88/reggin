@@ -6,9 +6,9 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-resty/resty/v2 v2.14.0
 	github.com/stretchr/testify v1.9.0
-	github.com/yyle88/done v1.0.9
+	github.com/yyle88/done v1.0.10
 	github.com/yyle88/erero v1.0.11
-	github.com/yyle88/neatjson v0.0.5
+	github.com/yyle88/neatjson v0.0.6
 )
 
 require (
@@ -35,8 +35,8 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	github.com/yyle88/mutexmap v1.0.4 // indirect
-	github.com/yyle88/sure v0.0.20 // indirect
-	github.com/yyle88/syntaxgo v0.0.24 // indirect
+	github.com/yyle88/sure v0.0.22 // indirect
+	github.com/yyle88/syntaxgo v0.0.25 // indirect
 	github.com/yyle88/zaplog v0.0.10 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
