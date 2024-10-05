@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	resty2 "github.com/go-resty/resty/v2"
+	restyv2 "github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/erero"
 )
@@ -143,7 +143,7 @@ func parseArg[argType any](c *gin.Context) (arg *argType, err error) {
 
 func TestAaa(t *testing.T) {
 	var res map[string]string
-	response, err := resty2.New().R().SetResult(&res).Post(caseServerUrxBase + "/aaa")
+	response, err := restyv2.New().R().SetResult(&res).Post(caseServerUrxBase + "/aaa")
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, response.StatusCode())
 	t.Log(string(response.Body()))
@@ -153,7 +153,7 @@ func TestAaa(t *testing.T) {
 func TestBbb(t *testing.T) {
 	var data map[string]string
 	var res = ResponseExample{Data: &data}
-	response, err := resty2.New().R().SetResult(&res).Post(caseServerUrxBase + "/bbb")
+	response, err := restyv2.New().R().SetResult(&res).Post(caseServerUrxBase + "/bbb")
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, response.StatusCode())
 	t.Log(string(response.Body()))
@@ -163,7 +163,7 @@ func TestBbb(t *testing.T) {
 func TestCcc(t *testing.T) {
 	var data map[string]string
 	var res = ResponseExample{Data: &data}
-	response, err := resty2.New().R().SetBody(map[string]int{
+	response, err := restyv2.New().R().SetBody(map[string]int{
 		"a": 100,
 	}).SetResult(&res).Post(caseServerUrxBase + "/ccc")
 	require.NoError(t, err)
@@ -177,7 +177,7 @@ func TestDdd(t *testing.T) {
 	{
 		var data map[string]string
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{
+		response, err := restyv2.New().R().SetBody(map[string]int{
 			"a": 100,
 		}).SetResult(&res).Post(caseServerUrxBase + "/ddd")
 		require.NoError(t, err)
@@ -188,7 +188,7 @@ func TestDdd(t *testing.T) {
 	{
 		var data map[string]string
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/ddd")
+		response, err := restyv2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/ddd")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
 		t.Log(string(response.Body()))
@@ -199,7 +199,7 @@ func TestDdd(t *testing.T) {
 func TestEee(t *testing.T) {
 	var data map[string]string
 	var res = ResponseExample{Data: &data}
-	response, err := resty2.New().R().SetBody(map[string]int{
+	response, err := restyv2.New().R().SetBody(map[string]int{
 		"a": 100,
 	}).SetResult(&res).Post(caseServerUrxBase + "/eee")
 	require.NoError(t, err)
@@ -212,7 +212,7 @@ func TestEee(t *testing.T) {
 func TestFff(t *testing.T) {
 	var data string
 	var res = ResponseExample{Data: &data}
-	response, err := resty2.New().R().SetResult(&res).Post(caseServerUrxBase + "/fff")
+	response, err := restyv2.New().R().SetResult(&res).Post(caseServerUrxBase + "/fff")
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, response.StatusCode())
 	t.Log(string(response.Body()))
@@ -222,7 +222,7 @@ func TestFff(t *testing.T) {
 func TestGgg(t *testing.T) {
 	var data int
 	var res = ResponseExample{Data: &data}
-	response, err := resty2.New().R().SetBody(map[string]int{
+	response, err := restyv2.New().R().SetBody(map[string]int{
 		"a": 100,
 		"b": 200,
 	}).SetResult(&res).Post(caseServerUrxBase + "/ggg")
@@ -236,7 +236,7 @@ func TestHhh(t *testing.T) {
 	{
 		var data bool
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{
+		response, err := restyv2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
 		}).SetResult(&res).Post(caseServerUrxBase + "/hhh")
@@ -248,7 +248,7 @@ func TestHhh(t *testing.T) {
 	{
 		var data bool
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{
+		response, err := restyv2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
 			"c": 300,
@@ -265,7 +265,7 @@ func TestIii(t *testing.T) {
 	{
 		var data []string
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{
+		response, err := restyv2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
 		}).SetResult(&res).Post(caseServerUrxBase + "/iii")
@@ -277,7 +277,7 @@ func TestIii(t *testing.T) {
 	{
 		var data []string
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/iii")
+		response, err := restyv2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/iii")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
 		t.Log(string(response.Body()))
@@ -289,7 +289,7 @@ func TestJjj(t *testing.T) {
 	{
 		var data map[string]string
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{
+		response, err := restyv2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
 		}).SetResult(&res).Post(caseServerUrxBase + "/jjj")
@@ -301,7 +301,7 @@ func TestJjj(t *testing.T) {
 	{
 		var data map[string]string
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/jjj")
+		response, err := restyv2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/jjj")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
 		t.Log(string(response.Body()))

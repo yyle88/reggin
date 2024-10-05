@@ -4,18 +4,27 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/yyle88/must"
 )
 
 type MethodName string
 
 const (
-	Any    MethodName = "Any"
 	GET    MethodName = "GET"
 	POST   MethodName = "POST"
 	DELETE MethodName = "DELETE"
-	PATCH  MethodName = "PATCH"
 	PUT    MethodName = "PUT"
+	PATCH  MethodName = "PATCH"
+	ANY    MethodName = "ANY"
 )
+
+func init() {
+	must.Equals(GET, http.MethodGet)
+	must.Equals(POST, http.MethodPost)
+	must.Equals(DELETE, http.MethodDelete)
+	must.Equals(PATCH, http.MethodPatch)
+	must.Equals(PUT, http.MethodPut)
+}
 
 // RequestHandlerFunc 就是需要实现每个api的处理逻辑
 // 这里使用泛型的考虑是，避免返回值中出现不符合类型的，比如笔误返回其它类型(常见的是 return err 这种笔误)
@@ -48,18 +57,18 @@ func RegisterRoutes[T any](group *gin.RouterGroup, urls Routes[T]) {
 		}
 
 		switch route.Method {
-		case Any:
-			group.Any(route.Path, run)
 		case GET:
 			group.GET(route.Path, run)
 		case POST:
 			group.POST(route.Path, run)
 		case DELETE:
 			group.DELETE(route.Path, run)
-		case PATCH:
-			group.PATCH(route.Path, run)
 		case PUT:
 			group.PUT(route.Path, run)
+		case PATCH:
+			group.PATCH(route.Path, run)
+		case ANY:
+			group.Any(route.Path, run)
 		default:
 			group.Handle(string(route.Method), route.Path, run)
 		}

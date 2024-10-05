@@ -1,4 +1,4 @@
-package routers
+package routers_demo1x
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 	service2 "github.com/yyle88/reggin/internal/demos/reggin_demo1x/service"
 )
 
-func NewGinEngineWithRouters() *gin.Engine {
+func NewEngineWithHttpRoute() *gin.Engine {
 	g := gin.New()
 	g.Use(gin.Recovery()) // set a global middleware
 	//g.Use(middleware) // set a global middleware

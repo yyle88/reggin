@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	resty2 "github.com/go-resty/resty/v2"
+	restyv2 "github.com/go-resty/resty/v2"
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/erero"
 )
@@ -37,7 +37,7 @@ func TestKkk(t *testing.T) {
 	{
 		var data map[string]string
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{
+		response, err := restyv2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
 		}).SetResult(&res).Post(caseServerUrxBase + "/kkk")
@@ -49,7 +49,7 @@ func TestKkk(t *testing.T) {
 	{
 		var data map[string]string
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/kkk")
+		response, err := restyv2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/kkk")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
 		t.Log(string(response.Body()))
@@ -61,7 +61,7 @@ func TestLll(t *testing.T) {
 	{
 		var data map[string]string
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{
+		response, err := restyv2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
 		}).SetResult(&res).Post(caseServerUrxBase + "/lll")
@@ -73,7 +73,7 @@ func TestLll(t *testing.T) {
 	{
 		var data map[string]string
 		var res = ResponseExample{Data: &data}
-		response, err := resty2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/lll")
+		response, err := restyv2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(caseServerUrxBase + "/lll")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
 		t.Log(string(response.Body()))
