@@ -16,6 +16,12 @@ go get github.com/yyle88/reggin
 
 [演示](internal/demos/demo1x/routers1x/routers.go)
 
+[演示](warpginhandle/reghan_p_test.go)
+
+[演示](regginservice/reg_routes_test.go)
+
+[演示](reggin_test.go)
+
 ## 许可
 
 `reggin` 是一个开源项目，发布于 MIT 许可证下。有关更多信息，请参阅 [LICENSE](LICENSE) 文件。

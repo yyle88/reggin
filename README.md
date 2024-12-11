@@ -23,6 +23,12 @@ go get github.com/yyle88/reggin
 
 [Demo](internal/demos/demo1x/routers1x/routers.go)
 
+[Demo](warpginhandle/reghan_p_test.go)
+
+[Demo](regginservice/reg_routes_test.go)
+
+[Demo](reggin_test.go)
+
 ## License
 
 `reggin` is open-source and released under the MIT License. See the [LICENSE](LICENSE) file for more information.
