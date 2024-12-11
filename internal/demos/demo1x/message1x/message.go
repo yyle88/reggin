@@ -1,4 +1,4 @@
-package message
+package message1x
 
 // Response defile you response struct type
 // 自定义的返回结构

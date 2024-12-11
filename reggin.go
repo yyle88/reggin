@@ -4,52 +4,48 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/yyle88/must"
 )
 
-type MethodName string
+type Method string
 
 const (
-	GET    MethodName = "GET"
-	POST   MethodName = "POST"
-	DELETE MethodName = "DELETE"
-	PUT    MethodName = "PUT"
-	PATCH  MethodName = "PATCH"
-	ANY    MethodName = "ANY"
+	GET    Method = "GET"
+	POST   Method = "POST"
+	DELETE Method = "DELETE"
+	PUT    Method = "PUT"
+	PATCH  Method = "PATCH"
+	ANY    Method = "ANY"
 )
 
-func init() {
-	must.Equals(GET, http.MethodGet)
-	must.Equals(POST, http.MethodPost)
-	must.Equals(DELETE, http.MethodDelete)
-	must.Equals(PATCH, http.MethodPatch)
-	must.Equals(PUT, http.MethodPut)
+// RequestHandlerFunc handles HTTP requests and returns a response of type RES.
+// RequestHandlerFunc 是 http 路由的处理函数，返回 RES 类型。
+type RequestHandlerFunc[RES any] func(c *gin.Context) RES
+
+type Route[RES any] struct {
+	Method Method                  // HTTP method
+	Path   string                  // Route path
+	Handle RequestHandlerFunc[RES] // Request handler
 }
 
-// RequestHandlerFunc 就是需要实现每个api的处理逻辑
-// 这里使用泛型的考虑是，避免返回值中出现不符合类型的，比如笔误返回其它类型(常见的是 return err 这种笔误)
-// 这样就能在编码时确保所有的返回值都是我们定义的数据格式(通常认为同一组api的返回值，遵循相同的数据格式，比如数据data，错误码code，错误信息msg等等字段)
-type RequestHandlerFunc[T any] func(c *gin.Context) T
+type Routes[RES any] []*Route[RES]
 
-type Route[T any] struct {
-	Method MethodName
-	Path   string
-	Handle RequestHandlerFunc[T]
+// Application defines an interface that returns routes for the app.
+// Application 定义了一个接口，返回应用程序的路由。
+type Application[RES any] interface {
+	GetRoutes() Routes[RES]
 }
 
-type Routes[T any] []*Route[T]
-
-type Application[T any] interface {
-	GetRoutes() Routes[T]
-}
-
-func PackageRoutes[T any](group *gin.RouterGroup, app Application[T]) {
+// PackageRoutes registers the app's routes into a gin RouterGroup.
+// PackageRoutes 将应用程序的路由注册到 gin RouterGroup 中。
+func PackageRoutes[RES any](group *gin.RouterGroup, app Application[RES]) {
 	RegisterRoutes(group, app.GetRoutes())
 }
 
-func RegisterRoutes[T any](group *gin.RouterGroup, urls Routes[T]) {
-	for idx := range urls {
-		var route = urls[idx] //注意：这里不能使用循环变量idx或者其他的，而是要使用临时变量，除非是go高版本已修复这个问题
+// RegisterRoutes registers routes to the provided gin RouterGroup.
+// RegisterRoutes 将路由注册到提供的 gin RouterGroup 中。
+func RegisterRoutes[RES any](group *gin.RouterGroup, routes Routes[RES]) {
+	for idx := range routes {
+		var route = routes[idx] // Avoid using idx directly in the loop, use a temporary variable
 
 		run := func(ctx *gin.Context) {
 			response := route.Handle(ctx)

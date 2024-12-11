@@ -1,9 +1,9 @@
-package service
+package service1x
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/yyle88/reggin"
-	"github.com/yyle88/reggin/internal/demos/reggin_demo1x/message"
+	"github.com/yyle88/reggin/internal/demos/demo1x/message1x"
 )
 
 // A1 define a service
@@ -12,24 +12,24 @@ type A1 struct{}
 
 // GetRoutes defile routers
 // 自定义的接口
-func (a *A1) GetRoutes() reggin.Routes[message.Response] {
-	return reggin.Routes[message.Response]{
+func (a *A1) GetRoutes() reggin.Routes[message1x.Response] {
+	return reggin.Routes[message1x.Response]{
 		{Method: reggin.GET, Path: "demo", Handle: a.HandleGetDemo},
 		{Method: reggin.POST, Path: "demo", Handle: a.HandlePostDemo},
 		{Method: reggin.POST, Path: "set", Handle: a.HandleSetDemo},
 	}
 }
 
-func (a *A1) HandleGetDemo(c *gin.Context) message.Response {
+func (a *A1) HandleGetDemo(c *gin.Context) message1x.Response {
 	//write logic here 在这里实现你的逻辑
-	return message.Response{
+	return message1x.Response{
 		Code: 0,
 		Desc: "OK",
 		Data: map[string]any{"a": "a", "b": "b", "c": "c"},
 	}
 }
 
-func (a *A1) HandlePostDemo(c *gin.Context) message.Response {
+func (a *A1) HandlePostDemo(c *gin.Context) message1x.Response {
 	//write logic here 在这里实现你的逻辑
 	//example:
 	//defile request type. define it here is more clean than defile it outside the func.
@@ -45,7 +45,7 @@ func (a *A1) HandlePostDemo(c *gin.Context) message.Response {
 	//就是说，最好是在函数的起始阶段就定义req和resp的数据类型，接下来是解析req的数据
 	var req requestType
 	if err := c.ShouldBindJSON(&req); err != nil {
-		return message.Response{
+		return message1x.Response{
 			Code: -1,
 			Desc: "wrong param",
 			Data: nil,
@@ -58,14 +58,14 @@ func (a *A1) HandlePostDemo(c *gin.Context) message.Response {
 		Z: req.X * 3,
 	}
 	// return the response
-	return message.Response{
+	return message1x.Response{
 		Code: 0,
 		Desc: "OK",
 		Data: data, // set response data here.
 	}
 }
 
-func (a *A1) HandleSetDemo(c *gin.Context) message.Response {
+func (a *A1) HandleSetDemo(c *gin.Context) message1x.Response {
 	type requestType struct {
 		X int
 	}
@@ -74,7 +74,7 @@ func (a *A1) HandleSetDemo(c *gin.Context) message.Response {
 	}
 	var req requestType
 	if err := c.ShouldBindJSON(&req); err != nil {
-		return message.Response{
+		return message1x.Response{
 			Code: -1,
 			Desc: "wrong param",
 			Data: nil,
@@ -83,7 +83,7 @@ func (a *A1) HandleSetDemo(c *gin.Context) message.Response {
 	//write some logic
 	res := req.X * 2
 	//set return value
-	return message.Response{
+	return message1x.Response{
 		Code: 0,
 		Desc: "OK",
 		Data: responseType{Y: res},
