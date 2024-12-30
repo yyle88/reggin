@@ -141,8 +141,8 @@ func jjjHandle(arg *map[string]int) (map[string]string, error) {
 
 func parseArg[argType any](c *gin.Context) (arg *argType, err error) {
 	var req argType
-	if erx := c.ShouldBindJSON(&req); erx != nil {
-		return nil, erero.WithMessage(erx, "CAN NOT BIND REQ")
+	if err = c.ShouldBindJSON(&req); err != nil {
+		return nil, erero.WithMessage(err, "CAN NOT BIND REQ")
 	}
 	return &req, nil
 }

@@ -9,15 +9,15 @@ type ExampleResponse struct {
 	Data any    `json:"data"`
 }
 
-func NewResponse[RES any](ctx *gin.Context, res RES, erx error) *ExampleResponse {
-	return NewResp[RES](ctx, &res, erx)
+func NewResponse[RES any](ctx *gin.Context, res RES, err error) *ExampleResponse {
+	return NewResp[RES](ctx, &res, err)
 }
 
-func NewResp[RES any](ctx *gin.Context, res *RES, erx error) *ExampleResponse {
-	if erx != nil {
+func NewResp[RES any](ctx *gin.Context, res *RES, err error) *ExampleResponse {
+	if err != nil {
 		return &ExampleResponse{
 			Code: -1,
-			Desc: erx.Error(),
+			Desc: err.Error(),
 			Data: nil,
 		}
 	} else {

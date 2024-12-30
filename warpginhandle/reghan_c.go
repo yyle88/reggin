@@ -15,21 +15,21 @@ type Handle1cFunc[ARG, RES any] func(ctx *gin.Context, arg *ARG) (RES, error)
 
 func Handle0c[RES any, RESPONSE any](run Handle0cFunc[RES], respFunc MakeRespFunc[RES, RESPONSE]) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		res, erx := run(ctx) //区别只在这里，这个传ctx信息，在新的开发规范中ctx还是很有用的，因此推荐使用带ctx的函数
-		ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, erx))
+		res, err := run(ctx) //区别只在这里，这个传ctx信息，在新的开发规范中ctx还是很有用的，因此推荐使用带ctx的函数
+		ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, err))
 	}
 }
 
 func Handle1c[ARG, RES any, RESPONSE any](run Handle1cFunc[ARG, RES], parseReq ParseArgFunc[ARG], respFunc MakeRespFunc[RES, RESPONSE]) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		arg, erx := parseReq(ctx)
-		if erx != nil {
+		arg, err := parseReq(ctx)
+		if err != nil {
 			var res RES // zero
-			ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, erero.WithMessage(erx, "PARAM IS WRONG")))
+			ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, erero.WithMessage(err, "PARAM IS WRONG")))
 			return
 		}
-		res, erx := run(ctx, arg) //区别只在这里，这个传ctx信息，在新的开发规范中ctx还是很有用的，因此推荐使用带ctx的函数
-		ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, erx))
+		res, err := run(ctx, arg) //区别只在这里，这个传ctx信息，在新的开发规范中ctx还是很有用的，因此推荐使用带ctx的函数
+		ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, err))
 	}
 }
 

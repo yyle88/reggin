@@ -15,21 +15,21 @@ type Handle1pFunc[ARG, RES any] func(arg *ARG) (RES, error)
 
 func Handle0p[RES any, RESPONSE any](run Handle0pFunc[RES], respFunc MakeRespFunc[RES, RESPONSE]) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		res, erx := run() //区别只在这里，这个不传ctx信息，因此处理逻辑里拿不到ctx信息，适用于简单场景
-		ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, erx))
+		res, err := run() //区别只在这里，这个不传ctx信息，因此处理逻辑里拿不到ctx信息，适用于简单场景
+		ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, err))
 	}
 }
 
 func Handle1p[ARG, RES any, RESPONSE any](run Handle1pFunc[ARG, RES], parseReq ParseArgFunc[ARG], respFunc MakeRespFunc[RES, RESPONSE]) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		arg, erx := parseReq(ctx)
-		if erx != nil {
+		arg, err := parseReq(ctx)
+		if err != nil {
 			var res RES // zero
-			ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, erero.WithMessage(erx, "PARAM IS WRONG")))
+			ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, erero.WithMessage(err, "PARAM IS WRONG")))
 			return
 		}
-		res, erx := run(arg) //区别只在这里，这个不传ctx信息，因此处理逻辑里拿不到ctx信息，适用于简单场景
-		ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, erx))
+		res, err := run(arg) //区别只在这里，这个不传ctx信息，因此处理逻辑里拿不到ctx信息，适用于简单场景
+		ctx.SecureJSON(http.StatusOK, respFunc(ctx, res, err))
 	}
 }
 

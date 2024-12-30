@@ -29,6 +29,8 @@ go get github.com/yyle88/reggin
 
 [Demo](reggin_test.go)
 
+---
+
 ## License
 
 `reggin` is open-source and released under the MIT License. See the [LICENSE](LICENSE) file for more information.
@@ -47,5 +49,8 @@ If you find this package helpful, give it a star on GitHub!
 
 Give me stars. Thank you!!!
 
-## See stars
-[![see stars](https://starchart.cc/yyle88/reggin.svg?variant=adaptive)](https://starchart.cc/yyle88/reggin)
+---
+
+## Starring
+
+[![starring](https://starchart.cc/yyle88/reggin.svg?variant=adaptive)](https://starchart.cc/yyle88/reggin)
