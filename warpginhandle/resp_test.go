@@ -2,26 +2,26 @@ package warpginhandle_test
 
 import "github.com/gin-gonic/gin"
 
-// ExampleResponse 这个只是自定义的消息，在项目中你可以使用自定义的消息，这里只是提供个简单的样例
-type ExampleResponse struct {
+// 这个只是自定义的消息，在项目中你可以使用自定义的消息，这里只是提供个简单的样例
+type respType struct {
 	Code int    `json:"code"`
 	Desc string `json:"desc"`
 	Data any    `json:"data"`
 }
 
-func NewResponse[RES any](ctx *gin.Context, res RES, err error) *ExampleResponse {
-	return NewResp[RES](ctx, &res, err)
+func caseResp[RES any](ctx *gin.Context, res RES, cause error) *respType {
+	return warpResp[RES](ctx, &res, cause)
 }
 
-func NewResp[RES any](ctx *gin.Context, res *RES, err error) *ExampleResponse {
-	if err != nil {
-		return &ExampleResponse{
+func warpResp[RES any](ctx *gin.Context, res *RES, cause error) *respType {
+	if cause != nil {
+		return &respType{
 			Code: -1,
-			Desc: err.Error(),
+			Desc: cause.Error(),
 			Data: nil,
 		}
 	} else {
-		return &ExampleResponse{
+		return &respType{
 			Code: 0,
 			Desc: "SUCCESS",
 			Data: res,

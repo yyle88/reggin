@@ -72,7 +72,7 @@ func oooHandle(ctx *gin.Context, arg *oooParam) (*map[string]string, error) {
 func TestKkk(t *testing.T) {
 	{
 		var data map[string]string
-		var res = ExampleResponse{Data: &data}
+		var res = respType{Data: &data}
 		response, err := restyv2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
@@ -85,7 +85,7 @@ func TestKkk(t *testing.T) {
 	}
 	{
 		var data map[string]string
-		var res = ExampleResponse{Data: &data}
+		var res = respType{Data: &data}
 		response, err := restyv2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(testServerURL + "/kkk")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
@@ -97,7 +97,7 @@ func TestKkk(t *testing.T) {
 func TestLll(t *testing.T) {
 	{
 		var data map[string]string
-		var res = ExampleResponse{Data: &data}
+		var res = respType{Data: &data}
 		response, err := restyv2.New().R().SetBody(map[string]int{
 			"a": 100,
 			"b": 200,
@@ -110,7 +110,7 @@ func TestLll(t *testing.T) {
 	}
 	{
 		var data map[string]string
-		var res = ExampleResponse{Data: &data}
+		var res = respType{Data: &data}
 		response, err := restyv2.New().R().SetBody(map[string]int{}).SetResult(&res).Post(testServerURL + "/lll")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, response.StatusCode())
@@ -121,7 +121,7 @@ func TestLll(t *testing.T) {
 
 func TestMmm(t *testing.T) {
 	var data map[string]string
-	var res = ExampleResponse{Data: &data}
+	var res = respType{Data: &data}
 	response, err := restyv2.New().R().SetQueryParams(map[string]string{
 		"a": "aaa",
 		"b": "bbb",
@@ -135,7 +135,7 @@ func TestMmm(t *testing.T) {
 
 func TestNnn(t *testing.T) {
 	var data map[string]string
-	var res = ExampleResponse{Data: &data}
+	var res = respType{Data: &data}
 	response, err := restyv2.New().R().SetQueryParams(map[string]string{
 		"a": "aaa",
 		"b": "bbb",
@@ -149,7 +149,7 @@ func TestNnn(t *testing.T) {
 
 func TestOoo(t *testing.T) {
 	var data map[string]string
-	var res = ExampleResponse{Data: &data}
+	var res = respType{Data: &data}
 	response, err := restyv2.New().R().SetQueryParams(map[string]string{
 		"a": "aaa",
 		"b": "bbb",
