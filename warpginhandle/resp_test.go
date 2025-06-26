@@ -28,3 +28,11 @@ func warpResp[RES any](ctx *gin.Context, res *RES, cause error) *respType {
 		}
 	}
 }
+
+func wrongResp(ctx *gin.Context, cause error) *respType {
+	return &respType{
+		Code: -1,
+		Desc: cause.Error(),
+		Data: nil,
+	}
+}

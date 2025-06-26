@@ -12,6 +12,7 @@ require (
 	github.com/yyle88/must v0.0.25
 	github.com/yyle88/neatjson v0.0.12
 	github.com/yyle88/zaplog v0.0.25
+	go.uber.org/zap v1.27.0
 )
 
 require (
@@ -41,7 +42,6 @@ require (
 	github.com/yyle88/syntaxgo v0.0.53 // indirect
 	github.com/yyle88/tern v0.0.8 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/arch v0.14.0 // indirect
 	golang.org/x/crypto v0.33.0 // indirect
 	golang.org/x/net v0.35.0 // indirect

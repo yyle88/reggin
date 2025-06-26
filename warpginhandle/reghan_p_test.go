@@ -55,6 +55,11 @@ func TestMain(m *testing.M) {
 	//这里替换成使用 form 取参数的逻辑，假如想用 form 接收 QueryParams 就可以这样，但推荐使用上面的 gin 自带的通过 form 获取参数
 	engine.GET("/ooo", warpginhandle.C1(oooHandle, warpginhandle.QueryForm[oooParam], warpResp[map[string]string]))
 
+	engine.GET("/ppp", warpginhandle.R0(pppHandle, wrongResp))
+	engine.GET("/qqq", warpginhandle.R1(qqqHandle, warpginhandle.QueryForm[qqqParam], wrongResp))
+	engine.POST("/rrr", warpginhandle.RX(rrrHandle, wrongResp))
+	engine.POST("/sss", warpginhandle.RX(sssHandle, wrongResp))
+
 	serverUt := httptest.NewServer(engine)
 	defer serverUt.Close()
 
