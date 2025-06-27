@@ -35,17 +35,17 @@ func TestMain(m *testing.M) {
 	engine.POST("/eee", warpginhandle.PX(eeeHandle, warpResp[map[string]string]))
 
 	//返回基本类型而非指针，测试返回基本类型，逻辑和前面的基本相同
-	engine.POST("/fff", warpginhandle.P0(fffHandle, caseResp[string]))
+	engine.POST("/fff", warpginhandle.P0(fffHandle, makeResp[string]))
 	//返回基本类型而非指针
-	engine.POST("/ggg", warpginhandle.PX(gggHandle, caseResp[int]))
+	engine.POST("/ggg", warpginhandle.PX(gggHandle, makeResp[int]))
 	//返回基本类型而非指针
-	engine.POST("/hhh", warpginhandle.P1(hhhHandle, parseArg[map[string]int], caseResp[bool]))
+	engine.POST("/hhh", warpginhandle.P1(hhhHandle, parseArg[map[string]int], makeResp[bool]))
 	//哦对返回数组也非指针
-	engine.POST("/iii", warpginhandle.P1(iiiHandle, warpginhandle.BIND[map[string]int], caseResp[[]string]))
+	engine.POST("/iii", warpginhandle.P1(iiiHandle, warpginhandle.BIND[map[string]int], makeResp[[]string]))
 	//前面返回*map是不科学的，这里返回map相对好些，也是非指针的返回类型
-	engine.POST("/jjj", warpginhandle.P1(jjjHandle, parseArg[map[string]int], caseResp[map[string]string]))
+	engine.POST("/jjj", warpginhandle.P1(jjjHandle, parseArg[map[string]int], makeResp[map[string]string]))
 	//这里带 gin.Context 做参数的那种处理函数的逻辑
-	engine.POST("/kkk", warpginhandle.C1(kkkHandle, warpginhandle.BIND[map[string]int], caseResp[map[string]string]))
+	engine.POST("/kkk", warpginhandle.C1(kkkHandle, warpginhandle.BIND[map[string]int], makeResp[map[string]string]))
 	//这里带 gin.Context 做参数的，但这里处理函数的返回的指针类型
 	engine.POST("/lll", warpginhandle.C1(lllHandle, parseArg[map[string]int], warpResp[map[string]string]))
 	//这里替换成使用 form 取参数的逻辑，这是gin自带的
@@ -59,6 +59,11 @@ func TestMain(m *testing.M) {
 	engine.GET("/qqq", warpginhandle.R1(qqqHandle, warpginhandle.QueryForm[qqqParam], wrongResp))
 	engine.POST("/rrr", warpginhandle.RX(rrrHandle, wrongResp))
 	engine.POST("/sss", warpginhandle.RX(sssHandle, wrongResp))
+
+	engine.GET("/ttt", warpginhandle.F0(tttHandle, wrongResp))
+	engine.GET("/uuu", warpginhandle.F1(uuuHandle, warpginhandle.QueryForm[uuuParam], wrongResp))
+	engine.POST("/vvv", warpginhandle.FX(vvvHandle, wrongResp))
+	engine.POST("/www", warpginhandle.FX(wwwHandle, wrongResp))
 
 	serverUt := httptest.NewServer(engine)
 	defer serverUt.Close()

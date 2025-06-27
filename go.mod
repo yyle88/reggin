@@ -11,6 +11,7 @@ require (
 	github.com/yyle88/erero v1.0.23
 	github.com/yyle88/must v0.0.25
 	github.com/yyle88/neatjson v0.0.12
+	github.com/yyle88/rese v0.0.10
 	github.com/yyle88/zaplog v0.0.25
 	go.uber.org/zap v1.27.0
 )

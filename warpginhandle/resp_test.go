@@ -9,23 +9,23 @@ type respType struct {
 	Data any    `json:"data"`
 }
 
-func caseResp[RES any](ctx *gin.Context, res RES, cause error) *respType {
+func makeResp[RES any](ctx *gin.Context, res RES, cause error) *respType {
 	return warpResp[RES](ctx, &res, cause)
 }
 
 func warpResp[RES any](ctx *gin.Context, res *RES, cause error) *respType {
 	if cause != nil {
-		return &respType{
-			Code: -1,
-			Desc: cause.Error(),
-			Data: nil,
-		}
+		return wrongResp(ctx, cause)
 	} else {
-		return &respType{
-			Code: 0,
-			Desc: "SUCCESS",
-			Data: res,
-		}
+		return rightResp(ctx, res)
+	}
+}
+
+func rightResp[RES any](ctx *gin.Context, res *RES) *respType {
+	return &respType{
+		Code: 0,
+		Desc: "SUCCESS",
+		Data: res,
 	}
 }
 
