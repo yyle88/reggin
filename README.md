@@ -21,13 +21,11 @@ go get github.com/yyle88/reggin
 
 ## Usage
 
-[Demo](internal/demos/demo1x/routers1x/routers.go)
+[Demo1](internal/demos/demo1x/main.go)
 
-[Demo](warpginhandle/reghan_p_test.go)
+[Demo2](internal/demos/demo2x/main.go)
 
-[Demo](regginservice/reg_routes_test.go)
-
-[Demo](reggin_test.go)
+[Demo3](internal/demos/demo3x/main.go)
 
 ---
 

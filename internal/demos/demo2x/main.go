@@ -14,7 +14,7 @@ import (
 func main() {
 	router := gin.Default()
 	router.POST("/events/abc", warpginhandle.PX(abcHandle, makeResp[abcRet]))
-	router.POST("/events/xyz", warpginhandle.PX(xyzHandle, makeResp[xyzRet]))
+	router.POST("/events/xyz", warpginhandle.CX(xyzHandle, makeResp[xyzRet]))
 
 	done.Done(router.Run(":8080"))
 }
@@ -48,7 +48,7 @@ type xyzRet struct {
 	Value string `json:"value"`
 }
 
-func xyzHandle(arg *xyzArg) (*xyzRet, error) {
+func xyzHandle(ctx *gin.Context, arg *xyzArg) (*xyzRet, error) {
 	zaplog.SUG.Debugln("xyz-arg:", neatjsons.S(arg))
 	value := strconv.Itoa(arg.Num)
 	ret := &xyzRet{
@@ -64,11 +64,11 @@ type respType struct {
 	Data any    `json:"data"`
 }
 
-func makeResp[RES any](ctx *gin.Context, res *RES, err error) *respType {
-	if err != nil {
+func makeResp[RES any](ctx *gin.Context, res *RES, cause error) *respType {
+	if cause != nil {
 		return &respType{
 			Code: -1,
-			Desc: err.Error(),
+			Desc: cause.Error(),
 			Data: nil,
 		}
 	} else {

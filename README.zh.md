@@ -14,13 +14,11 @@ go get github.com/yyle88/reggin
 
 ## 使用
 
-[演示](internal/demos/demo1x/routers1x/routers.go)
+[演示1](internal/demos/demo1x/main.go)
 
-[演示](warpginhandle/reghan_p_test.go)
+[演示2](internal/demos/demo2x/main.go)
 
-[演示](regginservice/reg_routes_test.go)
-
-[演示](reggin_test.go)
+[演示3](internal/demos/demo3x/main.go)
 
 ---
 
